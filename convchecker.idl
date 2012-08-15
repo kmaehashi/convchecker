@@ -1,0 +1,28 @@
+message config_data {
+  0: string config #JSON
+}
+
+message datum {
+  0: list<tuple<string, string> >  string_values
+  1: list<tuple<string, double> >  num_values
+}
+
+service convchecker{
+  #@broadcast #@update #@all_and
+  bool set_config(0: string name, 1: config_data c)
+
+  #@random #@analysis #@pass
+  config_data get_config(0: string name)
+
+  #@random #@update #@pass
+  string query(0: string name, 1: string query)
+
+  #@broadcast #@update #@all_and
+  bool save(0: string name, 1: string id)
+
+  #@broadcast #@update #@all_and
+  bool load(0: string name, 1: string id)
+
+  #@broadcast #@analysis #@merge
+  map<string,map<string,string> > get_status(0: string name)
+}
