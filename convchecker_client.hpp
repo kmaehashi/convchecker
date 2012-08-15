@@ -27,8 +27,8 @@ public:
       return call<config_data(std::string)>("get_config")(name);
     }
 
-    std::string query(std::string name, std::string query) {
-      return call<std::string(std::string, std::string)>("query")(name, query);
+    std::string query(std::string name, datum query) {
+      return call<std::string(std::string, datum)>("query")(name, query);
     }
 
     bool save(std::string name, std::string id) {
