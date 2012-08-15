@@ -24,7 +24,7 @@ def configure(conf):
 def build(bld):
   bld.program(
     source = name+'_serv.cpp '+ name +'_impl.cpp',
-    target = name,
+    target = 'juba' + name,
     use = ['JUBATUS_FRAMEWORK', 'JUBACOMMON', 'JUBACOMMON_MPRPC', 'JUBACONVERTER', 'PFICOMMON', 'PFICOMMON_CONCURRENT',
            'PFICOMMON_NETWORK_MPRPC', 'PFICOMMON_SYSTEM', 'MSGPACK',  
            'GLOG']
