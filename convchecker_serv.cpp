@@ -54,7 +54,23 @@ std::string convchecker_serv::query(const jubatus::datum& query)
 
 //update, random
 std::string convchecker_serv::bulk_query(const std::vector<datum >& query)
-{}
+{
+  jubatus::sfv_t fv;
+  fv_converter::datum d;
+  std::stringstream ret;
+
+  for (size_t i = 0; i < query.size(); ++i) {
+  
+    convert<jubatus::datum, fv_converter::datum>(query[i], d);
+    converter_->convert(d, fv);
+
+    for (size_t i = 0; i < fv.size(); ++i) {
+      ret << fv[i].first << ": " << fv[i].second << std::endl;
+    }
+  }
+
+  return ret.str();
+}
 
 //update, broadcast
 bool convchecker_serv::save(const std::string& id)
