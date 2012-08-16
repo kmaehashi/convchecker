@@ -31,6 +31,10 @@ public:
       return call<std::string(std::string, datum)>("query")(name, query);
     }
 
+    std::string bulk_query(std::string name, std::vector<datum > query) {
+      return call<std::string(std::string, std::vector<datum >)>("bulk_query")(name, query);
+    }
+
     bool save(std::string name, std::string id) {
       return call<bool(std::string, std::string)>("save")(name, id);
     }

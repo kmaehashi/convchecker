@@ -17,6 +17,8 @@ public:
 
   std::string query(const datum& query); //update random
 
+  std::string bulk_query(const std::vector<datum >& query); //update random
+
   bool save(const std::string& id); //update broadcast
 
   bool load(const std::string& id); //update broadcast

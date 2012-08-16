@@ -22,6 +22,9 @@ public:
   std::string query(std::string name, datum query) //update random
   { JWLOCK__(p_); return p_->query(query); }
 
+  std::string bulk_query(std::string name, std::vector<datum > query) //update random
+  { JWLOCK__(p_); return p_->bulk_query(query); }
+
   bool save(std::string name, std::string id) //update broadcast
   { JWLOCK__(p_); return p_->save(id); }
 

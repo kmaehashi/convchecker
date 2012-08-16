@@ -17,6 +17,9 @@ service convchecker{
   #@random #@update #@pass
   string query(0: string name, 1: datum query)
 
+  #@random #@update #@pass
+  string bulk_query(0: string name, 1: list<datum> query)
+
   #@broadcast #@update #@all_and
   bool save(0: string name, 1: string id)
 

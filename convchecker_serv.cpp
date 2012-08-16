@@ -52,6 +52,10 @@ std::string convchecker_serv::query(const jubatus::datum& query)
   return ret.str();
 }
 
+//update, random
+std::string convchecker_serv::bulk_query(const std::vector<datum >& query)
+{}
+
 //update, broadcast
 bool convchecker_serv::save(const std::string& id)
 {

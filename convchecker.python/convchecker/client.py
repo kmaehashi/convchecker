@@ -24,6 +24,10 @@ class convchecker:
     retval = self.client.call('query', name, query)
     return retval
 
+  def bulk_query (self, name, query):
+    retval = self.client.call('bulk_query', name, query)
+    return retval
+
   def save (self, name, id):
     retval = self.client.call('save', name, id)
     return retval
