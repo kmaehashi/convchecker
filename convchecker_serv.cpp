@@ -32,6 +32,7 @@ bool convchecker_serv::set_config(const config_data& c)
 //analysis, random
 config_data convchecker_serv::get_config() const
 {
+  check_set_config();
   return config_;
 }
 
@@ -40,7 +41,8 @@ std::string convchecker_serv::query(const jubatus::datum& query)
 {
   jubatus::sfv_t fv;
   fv_converter::datum d;
-  
+
+  check_set_config();
   convert<jubatus::datum, fv_converter::datum>(query, d);
   converter_->convert(d, fv);
 
@@ -59,6 +61,7 @@ std::string convchecker_serv::bulk_query(const std::vector<datum >& query)
   fv_converter::datum d;
   std::stringstream ret;
 
+  check_set_config();
   for (size_t i = 0; i < query.size(); ++i) {
   
     convert<jubatus::datum, fv_converter::datum>(query[i], d);
@@ -90,6 +93,13 @@ std::map<std::string,std::map<std::string,std::string > > convchecker_serv::get_
   std::map<std::string, std::map<std::string,std::string> > ret = jubatus_serv::get_status();
 
   return ret;
+}
+
+void convchecker_serv::check_set_config()const
+{
+  if (!converter_){
+    throw JUBATUS_EXCEPTION(config_not_set());
+  }
 }
 
 void convchecker_serv::after_load(){}

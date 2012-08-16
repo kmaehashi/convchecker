@@ -27,6 +27,7 @@ public:
   void after_load();
 
 private:
+  void check_set_config()const;
   config_data config_;
   pfi::lang::shared_ptr<fv_converter::datum_to_fv_converter> converter_;
 };
