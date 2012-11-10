@@ -2,14 +2,20 @@
 #pragma once
 #include <jubatus/framework.hpp>
 #include "convchecker_types.hpp"
+
 using namespace jubatus::framework;
 
 namespace jubatus { namespace server { // do not change
-class convchecker_serv : public jubatus_serv // do not change
+class convchecker_serv : public server_base // do not change
 {
 public:
-  convchecker_serv(const server_argv& a); // do not change
+  convchecker_serv(const server_argv& a,
+                   const jubatus::common::cshared_ptr<jubatus::common::lock_service>& zk); // do not change
   virtual ~convchecker_serv(); // do not change
+
+  mixer::mixer* get_mixer() const {
+    return mixer_.get();
+  }
 
   bool set_config(const config_data& c); //update broadcast
 
@@ -23,10 +29,11 @@ public:
 
   bool load(const std::string& id); //update broadcast
 
-  std::map<std::string,std::map<std::string,std::string > > get_status() const; //analysis broadcast
+  void get_status(status_t& status) const; //analysis broadcast
   void after_load();
 
 private:
+  pfi::lang::scoped_ptr<framework::mixer::mixer> mixer_;
   void check_set_config()const;
   config_data config_;
   pfi::lang::shared_ptr<fv_converter::datum_to_fv_converter> converter_;

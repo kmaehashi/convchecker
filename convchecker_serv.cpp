@@ -5,14 +5,18 @@
 #include <jubatus/common/shared_ptr.hpp>
 #include <jubatus/fv_converter/datum.hpp>
 #include <jubatus/fv_converter/datum_to_fv_converter.hpp>
+#include <jubatus/framework/mixer/mixer_factory.hpp>
 
+using namespace jubatus::common;
 using namespace jubatus::framework;
 using namespace pfi::lang;
 
 namespace jubatus { namespace server { // do not change
-convchecker_serv::convchecker_serv(const server_argv& a)
-  :framework::jubatus_serv(a)
-{}
+convchecker_serv::convchecker_serv(const server_argv& a, const jubatus::common::cshared_ptr<jubatus::common::lock_service>& zk)
+  :server_base(a)
+{
+  mixer_.reset(mixer::create_mixer(a, zk));
+}
 
 convchecker_serv::~convchecker_serv()
 {}
@@ -88,12 +92,8 @@ bool convchecker_serv::load(const std::string& id)
 }
 
 //analysis, broadcast
-std::map<std::string,std::map<std::string,std::string > > convchecker_serv::get_status() const
-{
-  std::map<std::string, std::map<std::string,std::string> > ret = jubatus_serv::get_status();
-
-  return ret;
-}
+void convchecker_serv::get_status(status_t& status) const
+{}
 
 void convchecker_serv::check_set_config()const
 {
