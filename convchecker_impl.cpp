@@ -14,10 +14,7 @@ public:
     p_(new server_helper<convchecker_serv>(a))
   {}
 
-  bool set_config(std::string name, config_data c) //update broadcast
-  { JWLOCK__(p_); return get_p()->set_config(c); }
-
-  config_data get_config(std::string name) //analysis random
+  std::string get_config(std::string name) //analysis random
   { JRLOCK__(p_); return get_p()->get_config(); }
 
   std::string query(std::string name, datum query) //update random
@@ -42,7 +39,6 @@ private:
 }} // namespace jubatus::server
 int main(int args, char** argv){
   return
-    jubatus::framework::run_server<jubatus::server::convchecker_impl_,
-                                   jubatus::server::convchecker_serv>
+    jubatus::framework::run_server<jubatus::server::convchecker_impl_>
        (args, argv, "convchecker");
 }

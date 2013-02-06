@@ -12,13 +12,9 @@ class convchecker:
     address = msgpackrpc.Address(host, port)
     self.client = msgpackrpc.Client(address)
 
-  def set_config (self, name, c):
-    retval = self.client.call('set_config', name, c)
-    return retval
-
   def get_config (self, name):
     retval = self.client.call('get_config', name)
-    return config_data.from_msgpack(retval)
+    return retval
 
   def query (self, name, query):
     retval = self.client.call('query', name, query)

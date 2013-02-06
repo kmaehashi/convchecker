@@ -7,47 +7,46 @@
 
 
 #include "convchecker_types.hpp"
-#include <pficommon/network/mprpc.h>
+#include <jubatus/msgpack/rpc/client.h>
 
 
 namespace jubatus {
 
 namespace client {
 
-class convchecker : public pfi::network::mprpc::rpc_client {
+class convchecker {
 public:
   convchecker(const std::string &host, uint64_t port, double timeout_sec)
-    : rpc_client(host, port, timeout_sec) {}
+    : c_(host, port) {
+    c_.set_timeout( timeout_sec );
+  }
 
-    bool set_config(std::string name, config_data c) {
-      return call<bool(std::string, config_data)>("set_config")(name, c);
-    }
-
-    config_data get_config(std::string name) {
-      return call<config_data(std::string)>("get_config")(name);
+    std::string get_config(std::string name) {
+      return c_.call("get_config", name).get<std::string >();
     }
 
     std::string query(std::string name, datum query) {
-      return call<std::string(std::string, datum)>("query")(name, query);
+      return c_.call("query", name, query).get<std::string >();
     }
 
     std::string bulk_query(std::string name, std::vector<datum > query) {
-      return call<std::string(std::string, std::vector<datum >)>("bulk_query")(name, query);
+      return c_.call("bulk_query", name, query).get<std::string >();
     }
 
     bool save(std::string name, std::string id) {
-      return call<bool(std::string, std::string)>("save")(name, id);
+      return c_.call("save", name, id).get<bool >();
     }
 
     bool load(std::string name, std::string id) {
-      return call<bool(std::string, std::string)>("load")(name, id);
+      return c_.call("load", name, id).get<bool >();
     }
 
     std::map<std::string, std::map<std::string, std::string > > get_status(std::string name) {
-      return call<std::map<std::string, std::map<std::string, std::string > >(std::string)>("get_status")(name);
+      return c_.call("get_status", name).get<std::map<std::string, std::map<std::string, std::string > > >();
     }
 
 private:
+  msgpack::rpc::client c_;
 };
 
 } // namespace client

@@ -17,9 +17,13 @@ public:
     return mixer_.get();
   }
 
-  bool set_config(const config_data& c); //update broadcast
+  pfi::lang::shared_ptr<framework::mixable_holder> get_mixable_holder() const {
+    return mixable_holder_;
+  }
 
-  config_data get_config() const; //analysis random
+  bool set_config(const std::string& config); //update broadcast
+
+  std::string get_config() const; //analysis random
 
   std::string query(const datum& query); //update random
 
@@ -34,8 +38,8 @@ public:
 
 private:
   pfi::lang::scoped_ptr<framework::mixer::mixer> mixer_;
-  void check_set_config()const;
-  config_data config_;
+  pfi::lang::shared_ptr<framework::mixable_holder> mixable_holder_;
+  std::string config_;
   pfi::lang::shared_ptr<fv_converter::datum_to_fv_converter> converter_;
 };
 }} // namespace jubatus::server

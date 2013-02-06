@@ -7,20 +7,6 @@ import sys
 import msgpack
 
 
-class config_data:
-  def __init__(self, config):
-    self.config = config
-
-  def to_msgpack(self):
-    return (
-      self.config,
-      )
-
-  @staticmethod
-  def from_msgpack(arg):
-    return config_data(
-      arg[0])
-
 class datum:
   def __init__(self, string_values, num_values):
     self.string_values = string_values

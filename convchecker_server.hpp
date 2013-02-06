@@ -7,7 +7,7 @@
 
 
 #include "convchecker_types.hpp"
-#include <pficommon/network/mprpc.h>
+#include <jubatus/common/mprpc/rpc_server.hpp>
 #include <pficommon/lang/bind.h>
 
 
@@ -16,12 +16,11 @@ namespace jubatus {
 namespace server {
 
 template <class Impl>
-class convchecker : public pfi::network::mprpc::rpc_server {
+class convchecker : public jubatus::common::mprpc::rpc_server {
 public:
   convchecker(double timeout_sec): rpc_server(timeout_sec) {
 
-    rpc_server::add<bool(std::string, config_data) >("set_config", pfi::lang::bind(&Impl::set_config, static_cast<Impl*>(this), pfi::lang::_1, pfi::lang::_2));
-    rpc_server::add<config_data(std::string) >("get_config", pfi::lang::bind(&Impl::get_config, static_cast<Impl*>(this), pfi::lang::_1));
+    rpc_server::add<std::string(std::string) >("get_config", pfi::lang::bind(&Impl::get_config, static_cast<Impl*>(this), pfi::lang::_1));
     rpc_server::add<std::string(std::string, datum) >("query", pfi::lang::bind(&Impl::query, static_cast<Impl*>(this), pfi::lang::_1, pfi::lang::_2));
     rpc_server::add<std::string(std::string, std::vector<datum >) >("bulk_query", pfi::lang::bind(&Impl::bulk_query, static_cast<Impl*>(this), pfi::lang::_1, pfi::lang::_2));
     rpc_server::add<bool(std::string, std::string) >("save", pfi::lang::bind(&Impl::save, static_cast<Impl*>(this), pfi::lang::_1, pfi::lang::_2));

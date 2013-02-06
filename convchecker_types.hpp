@@ -16,15 +16,6 @@
 
 namespace jubatus {
 
-struct config_data {
-public:
-
-  
-  MSGPACK_DEFINE(config);  
-
-  std::string config;
-};
-
 struct datum {
 public:
 
