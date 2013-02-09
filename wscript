@@ -1,5 +1,4 @@
 name='convchecker'
-JUBATUS_VERION='0.3.3'
 
 def options(opt):
   opt.load('compiler_cxx')
@@ -7,8 +6,6 @@ def options(opt):
 def configure(conf):
   conf.env.CXXFLAGS += ['-O2', '-Wall', '-g', '-pipe']
   conf.load('compiler_cxx')
-
-  conf.define('JUBATUS_VERSION', JUBATUS_VERION)
 
   conf.check_cxx(lib = 'msgpack', mandatory = True)
   conf.check_cxx(lib = 'glog', mandatory = True)
